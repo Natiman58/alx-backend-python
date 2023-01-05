@@ -2,10 +2,11 @@
 """
     Give the correct duck type annotations
 """
+from types import NoneType
 from typing import Sequence, Any, Union
 
 
-def safe_first_element(lst: Sequence[Any]) -> Union[Any, None]:
+def safe_first_element(lst: Sequence[Any]) -> Union[Any, NoneType]:
     """
         if there is list return the first element
         else: return none
