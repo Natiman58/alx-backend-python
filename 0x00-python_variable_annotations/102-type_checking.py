@@ -3,7 +3,7 @@
     A function that takes tuples, int and returns list
 """
 
-from typing import Tuple, List, Union, Any, SupportsIndex
+from typing import Tuple, List
 
 
 def zoom_array(lst: Tuple, factor: int = 2) -> List:
@@ -17,10 +17,8 @@ def zoom_array(lst: Tuple, factor: int = 2) -> List:
     return zoomed_in
 
 
-array = [12, 72, 91]
+array = (12, 72, 91)
 
-tup = tuple(array)
+zoom_2x = zoom_array(array)
 
-zoom_2x = zoom_array(tup)
-
-zoom_3x = zoom_array(tup, int(3.0))
+zoom_3x = zoom_array(array, 3)
