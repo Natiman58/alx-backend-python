@@ -5,6 +5,7 @@
 """
 from typing import Union, Tuple
 
+
 def to_kv(k: str, v: Union[int, float]) -> Tuple[str, float]:
     """Takes k(string) and v(int or float)
         and returns a tuple of str and float"""
