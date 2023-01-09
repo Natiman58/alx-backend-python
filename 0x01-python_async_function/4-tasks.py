@@ -6,7 +6,7 @@ from ast import List
 import asyncio
 task_wait_random = __import__('0-basic_async_syntax').wait_random
 
-async def task_wait_n(n: int, max_delay: int) -> List:
+async def task_wait_n(n: int, max_delay: int) -> List[float]:
     """
         waits for the wait_random function to complete
         return the results as a list
