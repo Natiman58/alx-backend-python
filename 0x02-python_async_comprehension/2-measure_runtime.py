@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-    A coroutine that measures a run time    
+    A coroutine that measures a run time
 """
 import asyncio
 import time
@@ -14,10 +14,8 @@ async def measure_runtime() -> float:
         using asyncio.gather
     """
     start_time = time.time()
-    
     for i in range(3):
         await asyncio.gather(async_comprehension())
-
     end_time = time.time()
-    
+
     return (end_time - start_time)
