@@ -58,5 +58,32 @@ class TestGetJson(unittest.TestCase):
         mock_response.assert_called_once_with(test_url)
 
 
+class TestMemoize(unittest.TestCase):
+    """
+        A class for unit testing utils.memoize method
+    """
+    def test_memoize(self):
+        """
+        A test for utils.memoize method
+        when calling the a_property make sure a_method is called
+        memoize a_propery so that
+        if a_propery is called twice a_method is called once
+
+        """
+        class TestClass:
+            def a_method(self):
+                return 42
+
+            @utils.memoize
+            def a_property(self):
+                return self.a_method()
+
+        with patch.object(TestClass, 'a_method') as mock_method:
+            thing = TestClass()
+            thing.a_property()
+            thing.a_property()
+        mock_method.assert_called_once()
+
+
 if __name__ == "__main__":
     unittest.main()
