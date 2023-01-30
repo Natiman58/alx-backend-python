@@ -5,12 +5,12 @@
 
 from typing import Dict
 import unittest
-from unittest import mock
 from unittest.mock import MagicMock, PropertyMock, patch
-from parameterized import parameterized
+from urllib.error import HTTPError
+from parameterized import parameterized, parameterized_class
 import client
 from client import GithubOrgClient
-
+from fixtures import TEST_PAYLOAD
 
 class TestGithubOrgClient(unittest.TestCase):
     """
@@ -74,3 +74,32 @@ class TestGithubOrgClient(unittest.TestCase):
         """
         test_licence = GithubOrgClient.has_license(repo, license_key)
         self.assertEqual(test_licence, expected)
+
+
+@parameterized_class([
+    {
+        'org_payload': TEST_PAYLOAD[0][0],
+        'repos_payload': TEST_PAYLOAD[0][1],
+        'expected_repos': TEST_PAYLOAD[0][2],
+        'apache2_repos': TEST_PAYLOAD[0][3],
+    },
+])
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """
+        This is an integration test class for the GithubOrgClient class.
+    """
+    @classmethod
+    def setUPCLass(self):
+        """
+            A setup class for the GithubOrgClient
+        """
+        self.get_patcher = patch('requests.get', return_value='', side_effect=Exception(HTTPError))
+        self.get_patcher.start()
+
+    @classmethod
+    def tearDownClass(self):
+        """
+            A teardown class for the GithubOrgClient
+            removes all the class fixures after running all tests
+        """
+        self.get_patcher.stop()
