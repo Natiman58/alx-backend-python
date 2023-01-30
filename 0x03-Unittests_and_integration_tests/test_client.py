@@ -1,6 +1,6 @@
-#!usr/bin/env python3
+#!/usr/bin/env python3
 """
-This is a simple script to run the main.py file.
+    This is a simple script to run the main.py file.
 """
 
 from typing import Dict
@@ -12,7 +12,7 @@ import client
 
 class TestGithubOrgClient(unittest.TestCase):
     """
-    This is a test class for the GithubOrgClient class.
+        This is a test class for the GithubOrgClient class.
     """
     @parameterized.expand([
         ("google", {'login': "google"}),
@@ -28,7 +28,3 @@ class TestGithubOrgClient(unittest.TestCase):
         mocked_fxn.assert_called_once_with(
             "https://api.github.com/orgs/{}".format(org)
         )
-
-
-__name__ = "__main__":
-    unittest.main()
