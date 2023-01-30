@@ -28,3 +28,7 @@ class TestGithubOrgClient(unittest.TestCase):
         mocked_fxn.assert_called_once_with(
             "https://api.github.com/orgs/{}".format(org)
         )
+
+
+__name__ = "__main__":
+    unittest.main()
