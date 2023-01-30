@@ -93,8 +93,12 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """
             A setup class for the GithubOrgClient
         """
-        self.get_patcher = patch('requests.get', side_effect=Exception(HTTPError))
+        self.get_patcher = patch('utils.requests.get', side_effect=Exception(HTTPError))
         self.get_patcher.start()
+
+    def test_public_repos(self):
+        """Test the public_repos method"""
+        self.assertEqual(GithubOrgClient('github').public_repos(), self.expected_repos)
 
     @classmethod
     def tearDownClass(self):
