@@ -43,9 +43,9 @@ class TestGithubOrgClient(unittest.TestCase):
             self.assertEqual(GithubOrgClient("github")._public_repos_url,
                              'https://api.github.com/users/google/repos')
 
-    @patch('client.get_json', return_value=[{'name': 'liscence1'},
-                                            {'name': 'liscence2'},
-                                            {'name': 'liscence3'}])
+    @patch('client.get_json', return_value=[{'name': 'license1'},
+                                            {'name': 'license2'},
+                                            {'name': 'license3'}])
     def test_public_repos(self, mock_client):
         """
             using patch as a decorator and context manager
@@ -63,3 +63,14 @@ class TestGithubOrgClient(unittest.TestCase):
 
             mock_client.assert_called_once()
             mock_public_repos.assert_called_once()
+
+    @parameterized.expand([
+        ({"license": {"key": "my_license"}}, "my_license", True),
+        ({"license": {"key": "other_license"}}, "my_license", False),
+    ])
+    def test_has_license(self, repo, license_key, expected):
+        """
+        Test the has_license method
+        """
+        test_licence = GithubOrgClient.has_license(repo, license_key)
+        self.assertEqual(test_licence, expected)
