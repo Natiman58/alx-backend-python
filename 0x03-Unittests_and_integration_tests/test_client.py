@@ -5,7 +5,7 @@
 
 from typing import Dict
 import unittest
-from unittest.mock import MagicMock, PropertyMock, patch
+from unittest.mock import MagicMock, Mock, PropertyMock, patch
 from urllib.error import HTTPError
 from parameterized import parameterized, parameterized_class
 import client
@@ -94,8 +94,18 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """
             A setup class for the GithubOrgClient
         """
+        pay_load_route = {
+            'https://api.github.com/orgs/google': self.org_payload,
+            'https://api.github.com/google/repos': self.repos_payload,
+        }
+
+        def pay_load(url):
+            if url in pay_load_route:
+                return Mock(**{'json.return_value': pay_load_route[url]})
+            else:
+                return HTTPError
         self.get_patcher = patch('requests.get',
-                                 side_effect=Exception(HTTPError))
+                                 side_effect=pay_load)
         self.get_patcher.start()
 
     def test_public_repos(self):
