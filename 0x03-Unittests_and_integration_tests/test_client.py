@@ -42,3 +42,24 @@ class TestGithubOrgClient(unittest.TestCase):
             }
             self.assertEqual(GithubOrgClient("github")._public_repos_url,
                              'https://api.github.com/users/google/repos')
+
+    @patch('client.get_json', return_value=[{'name':'liscence1'},
+                                            {'name': 'liscence2'},
+                                            {'name': 'liscence3'}])
+    def test_public_repos(self, mock_client):
+        """
+            using patch as a decorator and context manager
+            to mock test get_json and _public_repos methods
+            respectively
+
+        """
+
+        with patch.object(GithubOrgClient, '_public_repos_url',
+                   new_callable=PropertyMock,
+                   return_value="https://api.github.com") as mock_public_repos:
+            test_clinet = GithubOrgClient('client').public_repos()
+            for i in range(3):
+                self.assertIn(mock_client.return_value[i]['name'], test_clinet)
+
+            mock_client.assert_called_once()
+            mock_public_repos.assert_called_once()
