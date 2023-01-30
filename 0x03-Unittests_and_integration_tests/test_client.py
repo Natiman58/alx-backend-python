@@ -93,7 +93,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """
             A setup class for the GithubOrgClient
         """
-        self.get_patcher = patch('requests.get', return_value='', side_effect=Exception(HTTPError))
+        self.get_patcher = patch('requests.get', side_effect=Exception(HTTPError))
         self.get_patcher.start()
 
     @classmethod
